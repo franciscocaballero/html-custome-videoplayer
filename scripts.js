@@ -39,6 +39,8 @@ function handleProgress(){
 }
 
 function scrub(e){
+  const srubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+  video.currentTime = srubTime;
   console.log(e);
 }
 
@@ -55,4 +57,8 @@ skipButtons.forEach(button => button.addEventListener('click',skip))
 ranges.forEach(range => range.addEventListener('change' , handleRangeUpdate));
 ranges.forEach(range => range.addEventListener('mousemove' , handleRangeUpdate));
 
+let mousedown = false;
 progress.addEventListener('click', scrub);
+progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
+progress.addEventListener('mousedown', () => mousedown = true);
+progress.addEventListener('mouseuo', () => mousedown = false);
